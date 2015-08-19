@@ -2,9 +2,14 @@
 #include <stdio.h>
 #include "output.h"
 #include "symbol.h"
+/*#include "instruction.h"*/
 
 void yyerror();
 int yylex();
+
+extern int lines;
+extern struct instr instruction;
+
 %}
 
 %union {
@@ -30,7 +35,7 @@ program:
 	|
 	;
 
-line:
+line:		{ ++lines; }
 	statement
 	| label
 	| label statement

@@ -12,6 +12,7 @@
 #include "tokens.h"
 #include "output.h"
 #include "symbol.h"
+#include "instruction.h"
 
 int yyparse(void);
 extern FILE *yyin;
@@ -20,6 +21,8 @@ struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
 union value lvalue; /* this is used by yacc/lex */
 int sas_error = 0; /* if there is an error parsing the file, this is 1 */
+int lines = 0; /* global line count */
+struct instr instruction;
 
 static void display_usage(void)
 {
@@ -157,7 +160,6 @@ int main(int argc, char **argv)
 	char line[BUFSIZ];
 	FILE* asmfiles[BUFSIZ];
 	FILE *objfile = NULL;
-	int lines;
 	int i;
 
 	currw = 0x0000;

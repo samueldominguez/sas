@@ -4,7 +4,7 @@
 #include "output.h"
 
 extern int sas_error;
-int linecount = 0;
+extern int lines;
 %}
 
 %option noinput
@@ -70,8 +70,8 @@ op1_lc		jsr|hcf|int|rfi|ia[gsq]|hw[nqi]
 ;.*				; /* comment */
 .				{
 					fprintf(stderr, 
-					"error: line %d: unknown character %c\n",
-					linecount, *yytext);
+					"error: line %d: unknown character '%c'\n",
+					lines, *yytext);
 					sas_error = 1;
 				}
 
@@ -79,7 +79,7 @@ op1_lc		jsr|hcf|int|rfi|ia[gsq]|hw[nqi]
 
 void yyerror(char *s)
 {
-	fprintf(stdout, "%s\n");
+	fprintf(stdout, "line %d: %s\n", lines, s);
 }
 
 int yywrap(void)
