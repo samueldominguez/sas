@@ -1,3 +1,7 @@
+/*
+ *  output.c
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #include "output.h"
 
 int str2opcode(char *s)

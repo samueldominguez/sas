@@ -1,3 +1,7 @@
+/*
+ *  output.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef OUTPUT_H
 #define OUTPUT_H
 

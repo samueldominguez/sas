@@ -1,3 +1,7 @@
+/*
+ *  symbol.c
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #include "symbol.h"
 
 static struct symbol sym;

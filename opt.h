@@ -1,3 +1,7 @@
+/*
+ *  opt.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef OPT_H
 #define OPT_H
 

@@ -1,3 +1,7 @@
+/*
+ *  lex.l
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 %{
 #include <stdio.h>
 #include "yacc.h"

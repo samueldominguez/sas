@@ -1,3 +1,7 @@
+/*
+ *  tokens.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef TOKENS_H
 #define TOKENS_H
 

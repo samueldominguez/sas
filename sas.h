@@ -1,3 +1,7 @@
+/*
+ *  sas.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef SAS_H
 #define SAS_H
 

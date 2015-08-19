@@ -1,3 +1,7 @@
+/*
+ *  yacc.y
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 %{
 #include <stdio.h>
 #include "output.h"

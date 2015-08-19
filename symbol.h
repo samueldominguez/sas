@@ -1,3 +1,7 @@
+/*
+ *  symbol.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef SYMBOL_H
 #define SYMBOL_H
 

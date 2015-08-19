@@ -1,3 +1,7 @@
+/*
+ *  instruction.h
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #ifndef INSTRUCTION_H
 #define INSTRUCTION_H
 
