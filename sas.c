@@ -11,7 +11,7 @@
 #include "opt.h"
 #include "tokens.h"
 #include "output.h"
-#include "symbol.h"
+#include "label.h"
 #include "instruction.h"
 
 int yyparse(void);
@@ -19,7 +19,7 @@ extern FILE *yyin;
 
 struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
-union value lvalue; /* this is used by yacc/lex */
+/*union value lvalue; /* this is used by yacc/lex */
 int sas_error = 0; /* if there is an error parsing the file, this is 1 */
 int lines = 0; /* global line count */
 struct instr instruction;
@@ -163,7 +163,6 @@ int main(int argc, char **argv)
 	int i;
 
 	currw = 0x0000;
-	symbols.i = 0;
 
 	handle_args(argc, argv);
 	memset(ram, 0x0000, RAM_SIZE);

@@ -5,7 +5,7 @@
 %{
 #include <stdio.h>
 #include "output.h"
-#include "symbol.h"
+#include "label.h"
 /*#include "instruction.h"*/
 
 void yyerror();
@@ -13,7 +13,7 @@ int yylex();
 
 extern int lines;
 extern struct instr instruction;
-
+extern struct label label_table[];
 %}
 
 %union {
@@ -47,8 +47,8 @@ line:		{ ++lines; }
 
 label:
 	LABEL			{ 
-					printf("symbol: %s\n", yylval.string);
-					add_symbol(yylval.string, currw);
+					printf("label def: %s\n", yylval.string);
+					add_label(yylval.string, currw);
 				}
 	;
 
@@ -81,7 +81,8 @@ expr:
 
 symbol:
 	SYMBOL				{ 
-						$$ = get_symbol(yylval.string, currw);	
+						/* referenced symbol */
+						fprintf(stdout, "do smth\n");
 					}
 	;
 

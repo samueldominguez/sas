@@ -5,14 +5,14 @@
 #ifndef TOKENS_H
 #define TOKENS_H
 
-#include "symbol.h"
+/*#include "symbol.h"*/
 
-union value {
+/*union value {
 	int integer;
 	char *string;
 	struct symbol *dsymbol;
 	struct symbol *usymbol;
-};
+};*/
 
 #define OPCODE1		300
 #define OPCODE2		301
