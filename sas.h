@@ -6,6 +6,7 @@
 #define SAS_H
 
 #include <inttypes.h>
+#include <stdlib.h>
 
 typedef signed short s16;
 typedef unsigned short u16;

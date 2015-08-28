@@ -86,7 +86,7 @@ void yyerror(char *s)
 	fprintf(stdout, "line %d: %s\n", lines, s);
 }
 
-int yywrap(void)
+int yywrap()
 {
 	return 1;
 }

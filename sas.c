@@ -19,10 +19,9 @@ extern FILE *yyin;
 
 struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
-/*union value lvalue; /* this is used by yacc/lex */
+/*union value lvalue; this is used by yacc/lex */
 int sas_error = 0; /* if there is an error parsing the file, this is 1 */
-int lines = 0; /* global line count */
-struct instr instruction;
+int lines = 0; /* global line count */struct instr instruction;
 
 static void display_usage(void)
 {
@@ -48,7 +47,7 @@ static void suggest_help(void)
 	fprintf(stderr, "sas: type `sas -h' for help\n");
 }
 
-static void error(char *s)
+void error(char *s)
 {
 	fprintf(stderr, "sas: error: %s\n", s);
 }
@@ -184,6 +183,9 @@ int main(int argc, char **argv)
 	for (i = 0; i < opts.asm_fcount; ++i) {
 		yyin = asmfiles[i];
 		yyparse();
+	}
+	for (i = 0; i < currw; ++i) {
+		printf("0x%04x\n", ram[i]);
 	}
 	exit:
 	close_files(asmfiles, opts.asm_fcount);

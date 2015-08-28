@@ -7,10 +7,14 @@
 
 #include "sas.h"
 
-/* instruction types, OP2 means 2 arguments (set a, 2) OP1 means 1 argument */
-#define	INS_DAT		0x0001
-#define INS_OP2		0x0002
-#define INS_OP1		0x0003
+/* operand positions */
+#define OP_POS_A	0x0001
+#define OP_POS_B	0x0002
+
+/* operand types */
+#define OP_REG		0x0001
+#define OP_WRD		0x0002
+#define OP_REG_WRD	0x0003
 
 union opword {
 	u16 raw;
@@ -27,11 +31,22 @@ union opword {
 };
 
 struct instr {
-	int type; /* INS_DAT, INS_OP2, INS_OP1  */
 	int word_length;
 	union opword opword;
 	u16 word2;
 	u16 word3;
 };
+
+struct oper {
+	int op_pos;
+	int is_indirect;
+	int oper_type;
+	int reg;
+	int word;
+};
+
+struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word);
+void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, struct instr *instruction);
+int can_be_compressed(int a);
 
 #endif /* INSTRUCTION_H */
