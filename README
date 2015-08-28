@@ -1,0 +1,11 @@
+The assembler is coded in C with yacc and lex for parsing. Released under the
+GPL v2. The assembler outputs object files which contain all defined and 
+undefined symbols along with the binary of the source file.
+
+Also multiple files can be input to the assembler.
+
+TODO:
+- add assembler directives
+- DAT support
+
+If you want to contact me, email me at: samuel.dominguez.lorenzo@gmail.com
