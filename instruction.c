@@ -1,3 +1,7 @@
+/*
+ *  instruction.c
+ *  Copyright (C) 2015 Samuel Dominguez Lorenzo
+ */
 #include "instruction.h"
 
 extern void sas_error(char *s);
