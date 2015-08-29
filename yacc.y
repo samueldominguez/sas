@@ -11,7 +11,6 @@
 void yyerror();
 void error();
 int yylex();
-int can_be_compressed(int a);
 
 extern int lines;
 extern struct label label_table[];
@@ -65,7 +64,6 @@ label:
 
 statement:
 	instruct			{
-						printf("writing instruction to ram...\n");
 					 	if ((currw + (instruction.word_length - 1)) > 0xffff) {
 							error("cpu ram limit exceeded, please modularize");
 							YYACCEPT;
@@ -73,6 +71,7 @@ statement:
 						ram[currw] = instruction.opword.raw;
 						if (instruction.word_length > 2) {
 							ram[currw + 2] = instruction.word3;
+							ram[currw + 1] = instruction.word2;
 						} else if (instruction.word_length > 1) {
 							ram[currw + 1] = instruction.word2;
 						}
@@ -102,6 +101,7 @@ operand:
 
 	| '[' op_expr ']'		{
 						yylval.oper->is_indirect = 1;
+						$$ = yylval.oper;
 					}
 	;
 

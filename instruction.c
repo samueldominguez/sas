@@ -71,7 +71,8 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 			if (oper_b->is_indirect) {
 				instruction->opword.basic.a = IND_NW;
 				if (instruction->word_length == 2) {
-					instruction->word3 = (u16) oper_b->word;
+					instruction->word3 = instruction->word2;
+					instruction->word2 = (u16) oper_b->word;
 				} else {
 					instruction->word2 = (u16) oper_b->word;
 				}
@@ -86,7 +87,8 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 				} else {
 					instruction->opword.basic.a = DIR_NW;
 					if (instruction->word_length == 2) {
-						instruction->word3 = (u16) oper_b->word;
+						instruction->word3 = instruction->word2;
+						instruction->word2 = (u16) oper_b->word;
 					} else {
 						instruction->word2 = (u16) oper_b->word;
 					}
@@ -97,7 +99,8 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 		case OP_REG_WRD:
 			instruction->opword.basic.a = (u8) (oper_b->reg + 0x10);
 			if (instruction->word_length == 2) {
-				instruction->word3 = (u16) oper_b->word;
+				instruction->word3 = instruction->word2;
+				instruction->word2 = (u16) oper_b->word;
 			} else {
 				instruction->word2 = (u16) oper_b->word;
 			}
