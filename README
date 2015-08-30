@@ -20,5 +20,7 @@ TODO:
 .define <symbol> <value>	set <symbol> to <value> (is global)
 .fill <length> <value>		fills binary with <value> for <length> words
 
+--lib command line option for symbol only object file generation.
+
 If you want to contact me, my email is samuel.dominguez.lorenzo@gmail.com
 bugs, issues, requests send them through Github.
