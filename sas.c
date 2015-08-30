@@ -22,7 +22,8 @@ struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
 /*union value lvalue; this is used by yacc/lex */
 int sas_error = 0; /* if there is an error parsing the file, this is 1 */
-int lines = 0; /* global line count */struct instr instruction;
+int lines = 0; /* global line count */
+struct instr instruction;
 
 static void display_usage(void)
 {
