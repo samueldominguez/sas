@@ -1,11 +1,26 @@
-The assembler is coded in C with yacc and lex for parsing. Released under the
-GPL v2. The assembler outputs object files which contain all defined and 
-undefined symbols along with the binary of the source file.
+SAS is a DCPU-16 assembler.
+sas stands for simple assembler. It outputs object files which then
+are fed into the linker to then generate binary files. Why can't it
+generate binary files directly? this is because I needed tools that
+would work the way I wanted for system/kernel development.
 
-Also multiple files can be input to the assembler.
+The assembler is written entirely in C with yacc and lex for parsing.
+Released under the the GPL v2.
+
+It supports multiple assembly files, and always generates 1 object
+file. Here are some directives it supports:
+
+WIP
+===
+DIRECTIVES:
+DAT <value>/"<string>", ...	outputs values and 16 bit strings
 
 TODO:
-- add assembler directives
-- DAT support
+.ascii8 "<string>"		outputs 8 bit strings
+				(2 characters packed in a word)
+.org <address>			set instruction origin to <address>
+.define <symbol> <value>	set <symbol> to <value> (is global)
+.fill <length> <value>		fills binary with <value> for <length> words
 
-If you want to contact me, email me at: samuel.dominguez.lorenzo@gmail.com
+If you want to contact me, my email is samuel.dominguez.lorenzo
+bugs, issues, requests send them through Github.
