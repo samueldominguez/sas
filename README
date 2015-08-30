@@ -10,8 +10,6 @@ Released under the the GPL v2.
 It supports multiple assembly files, and always generates 1 object
 file. Here are some directives it supports:
 
-WIP
-===
 DIRECTIVES:
 DAT <value>/"<string>", ...	outputs values and 16 bit strings
 
