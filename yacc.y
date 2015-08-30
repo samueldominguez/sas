@@ -58,7 +58,7 @@ line:		{ ++lines; }
 label:
 	LABEL				{
 						printf("label def: %s\n", yylval.string);
-						add_label(yylval.string, currw);
+						add_label($1, currw);
 					}
 	;
 
@@ -124,7 +124,7 @@ op_expr:
 					}
 
 	| REG '+' expr			{
-						$$ = make_operand(0, 0, OP_REG_WRD, $1, $3);
+						yylval.oper = make_operand(0, 0, OP_REG_WRD, $1, $3);
 					}	
 	;
 
@@ -136,8 +136,14 @@ expr:
 
 symbol:
 	SYMBOL				{ 
-						/* referenced symbol */
-						$$ = 0x0000;
+						/* REFERENCED SYMBOL
+						 * word 0xfffe is returned
+						 * so that a word space is
+						 * is kept, since 0x0000 will
+						 * get compressed and 0xffff
+						 * too */
+						add_undefined($1, currw);
+						$$ = 0xfffe;
 					}
 	;
 

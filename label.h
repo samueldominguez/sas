@@ -9,9 +9,8 @@
 
 /* this max value was taken from the C standard, interesting fact, or not? */
 #define LABEL_MAX_LENGTH	63
-/* a rough estime, if you ever run out of labels just modify this and
- * recompile
- */
+/* a rough estimate, if you ever run out of labels just modify this and
+ * recompile */
 #define LABEL_MAX_NUMBER	3000
 
 struct label {
@@ -22,7 +21,13 @@ struct label {
 struct label label_table[LABEL_MAX_NUMBER];
 int label_count;
 
+struct label undefined_symbols[LABEL_MAX_NUMBER];
+int undefined_symbols_count;
+
 void init_label_table();
 void add_label(char *s, int ram_address);
+
+void init_undefined_table();
+void add_undefined(char *s, int ram_address);
 
 #endif /* LABEL_H */

@@ -178,6 +178,9 @@ int main(int argc, char **argv)
 	}
 	if (opts.obj_name_spec) printf("obj file: '%s'\n", opts.obj_fname);
 	else printf("obj file: '%s'\n", defout);
+
+	init_label_table();
+	init_undefined_table();
 	lines = 0;
 	for (i = 0; i < opts.asm_fcount; ++i) {
 		yyin = asmfiles[i];
