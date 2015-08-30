@@ -3,10 +3,10 @@
  *  Copyright (C) 2015 Samuel Dominguez Lorenzo
  */
 %{
-#include <stdio.h>
 #include "output.h"
 #include "label.h"
 #include "instruction.h"
+#include "directive.h"
 
 void yyerror();
 void error();
@@ -29,6 +29,7 @@ struct oper oper;
 %token <string> SYMBOL
 %token <string> LABEL
 %token <string> STRING
+%token <string> DAT
 %token <integer> NUMBER
 %token <integer> REG
 %token <integer> OP1
@@ -56,7 +57,6 @@ line:		{ ++lines; }
 
 label:
 	LABEL				{
-						printf("label def: %s\n", yylval.string);
 						add_label($1, currw);
 					}
 	;
@@ -76,6 +76,8 @@ statement:
 						}
 						currw += instruction.word_length;
 					}
+
+	| dat
 	;
 
 instruct:
@@ -87,9 +89,28 @@ instruct:
 
 	| OP1 operand			{
 						instruction.word_length = 1;
-						printf("making instruction\n");
 						make_instruction($1, $2, NULL, &instruction);
 					}
+	;
+
+dat:
+	DAT dat_expr			{
+						write_dat_dir();
+						init_dat_dir();
+					}
+	;
+
+dat_expr:
+	NUMBER				{
+						add_dat_element($1);
+					}
+
+	| STRING			{
+						int i;
+						int length = strlen($1);
+						for (i = 0; i < length; ++i) add_dat_element((int) $1[i]);
+					}
+	| dat_expr ',' dat_expr
 	;
 
 operand:

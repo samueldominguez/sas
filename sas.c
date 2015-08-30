@@ -12,6 +12,7 @@
 #include "output.h"
 #include "label.h"
 #include "instruction.h"
+#include "directive.h"
 
 int yyparse(void);
 extern FILE *yyin;
@@ -181,6 +182,8 @@ int main(int argc, char **argv)
 
 	init_label_table();
 	init_undefined_table();
+	init_dat_dir();
+
 	lines = 0;
 	for (i = 0; i < opts.asm_fcount; ++i) {
 		yyin = asmfiles[i];

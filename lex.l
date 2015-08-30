@@ -26,6 +26,8 @@ op2			SET|ADD|SUB|MUL|MLI|DIV|DVI|MOD|MDI|AND|[BX]OR|SH[LR]|ASR|IF[BCENGALU]|ADX
 op2_lc		set|add|sub|mul|mli|div|dvi|mod|mdi|and|[bx]or|sh[lr]|asr|if[bcengalu]|adx|sbx|st[id]
 op1			JSR|HCF|INT|RFI|IA[GSQ]|HW[NQI]
 op1_lc		jsr|hcf|int|rfi|ia[gsq]|hw[nqi]
+dat		DAT
+dat_lc		dat
 
 
 %%
@@ -59,12 +61,16 @@ op1_lc		jsr|hcf|int|rfi|ia[gsq]|hw[nqi]
 					yylval.integer = str2opcode(yytext);
 					return OP1;
 				}
+{dat}|{dat_lc}			{
+					return DAT;
+				}
 {symbol}			{ 
 					yylval.string = yytext;
 					return SYMBOL;
 				}
-\"(\\.|[^\\"])*\"		{ 
-					yylval.string = yytext;
+\"(\\.|[^\\"])*\"		{
+					yytext[strlen(yytext) - 1] = '\0';
+					yylval.string = yytext + 1;
 					return STRING;
 				}
 
