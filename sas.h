@@ -7,6 +7,7 @@
 
 #include <inttypes.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef signed short s16;
 typedef unsigned short u16;

@@ -8,13 +8,15 @@
 #include "sas.h"
 
 /* operand positions */
-#define OP_POS_A	0x0001
-#define OP_POS_B	0x0002
+#define OP_POS_A		0x0001
+#define OP_POS_B		0x0002
 
 /* operand types */
-#define OP_REG		0x0001
-#define OP_WRD		0x0002
-#define OP_REG_WRD	0x0003
+#define OP_REG			0x0001
+#define OP_WRD			0x0002
+#define OP_REG_WRD		0x0003
+
+#define SYMBOL_MAX_LENGTH	63
 
 union opword {
 	u16 raw;
@@ -40,12 +42,17 @@ struct instr {
 struct oper {
 	int op_pos;
 	int is_indirect;
+	int is_symbol;
 	int oper_type;
 	int reg;
 	int word;
+	char symbol_name[SYMBOL_MAX_LENGTH + 1];
 };
 
-struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word);
+struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word, char *symbol);
+void set_operand_reg(struct oper *oper, int reg);
+void set_operand_type(struct oper *oper, int type);
+
 void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, struct instr *instruction);
 int can_be_compressed(int a);
 

@@ -34,9 +34,8 @@ struct oper oper;
 %token <integer> OP1
 %token <integer> OP2
 
-
-%type <integer> symbol expr
-%type <oper> operand op_expr
+%type <string> symbol
+%type <oper> operand op_expr expr
 
 %defines "yacc.h"
 
@@ -107,43 +106,40 @@ operand:
 
 op_expr:
 	REG				{
-						yylval.oper = make_operand(0, 0, OP_REG, $1, 0);
+						yylval.oper = make_operand(0, 0, OP_REG, $1, 0, NULL);
 					}
 	
-	| expr				{
-						printf("expr: %d\n", $1);
-						yylval.oper = make_operand(0, 0, OP_WRD, 0, $1);
-					}
+	| expr
 
 	| REG expr  /* PICK n */	{
-						yylval.oper = make_operand(0, 0, OP_REG_WRD, $1, $2);
+						set_operand_reg(yylval.oper, $1);
+						set_operand_type(yylval.oper, OP_REG_WRD);
 					}
 
 	| expr '+' REG			{
-						yylval.oper = make_operand(0, 0, OP_REG_WRD, $3, $1);
+						set_operand_reg(yylval.oper, $3);
+						set_operand_type(yylval.oper, OP_REG_WRD);
 					}
 
 	| REG '+' expr			{
-						yylval.oper = make_operand(0, 0, OP_REG_WRD, $1, $3);
+						set_operand_reg(yylval.oper, $1);
+						set_operand_type(yylval.oper, OP_REG_WRD);
 					}	
 	;
 
 expr:
-	NUMBER
-				
-	| symbol
+	NUMBER				{
+						yylval.oper = make_operand(0, 0, OP_WRD, 0, $1, NULL);
+					}
+
+	| symbol			{
+						yylval.oper = make_operand(0, 0, OP_WRD, 0, 0x0000, $1);
+					}
 	;
 
 symbol:
 	SYMBOL				{ 
-						/* REFERENCED SYMBOL
-						 * word 0xfffe is returned
-						 * so that a word space is
-						 * is kept, since 0x0000 will
-						 * get compressed and 0xffff
-						 * too */
-						add_undefined($1, currw);
-						$$ = 0xfffe;
+						$$ = yylval.string;
 					}
 	;
 

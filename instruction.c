@@ -4,9 +4,12 @@
  */
 #include "instruction.h"
 
-extern void sas_error(char *s);
+extern u16 currw;
 
-struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word)
+extern void sas_error(char *s);
+extern void add_undefined(char *s, int ram_address);
+
+struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word, char *symbol)
 {
 	struct oper *oper;
 
@@ -17,10 +20,26 @@ struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, i
 		oper->oper_type = oper_type;
 		oper->reg = reg;
 		oper->word = word;
+		if (symbol) {
+			strncpy(oper->symbol_name, symbol, SYMBOL_MAX_LENGTH + 1);
+			oper->is_symbol = 1;
+		} else {
+			oper->is_symbol = 0;
+		}
 	} else {
 		sas_error("memory allocation failed for operand data structure");
 	}
 	return oper;
+}
+
+void set_operand_reg(struct oper *oper, int reg)
+{
+	if (oper) oper->reg = reg;
+}
+
+void set_operand_type(struct oper *oper, int type)
+{
+	if (oper) oper->oper_type = type;
 }
 
 /*
@@ -78,7 +97,7 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 				}
 				instruction->word_length++;
 			} else {			
-				if (can_be_compressed(oper_b->word)) {
+				if (can_be_compressed(oper_b->word) && oper_b->is_symbol == 0) {
 					if (oper_b->word == 0xffff) {
 						instruction->opword.basic.a = 0x20;
 					} else {
@@ -129,7 +148,7 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 				instruction->word2 = (u16) oper_a->word;
 				instruction->word_length++;
 			} else {			
-				if (can_be_compressed(oper_a->word)) {
+				if (can_be_compressed(oper_a->word) && oper_a->is_symbol != 0) {
 					if (oper_a->word == 0xffff) {
 						instruction->opword.nonbasic.a = 0x20;
 					} else {
@@ -152,6 +171,14 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 		/* do nothing */
 		}
 		free(oper_a);	
+	}
+	if (oper_a->is_symbol) {
+		if (instruction->word_length == 2) {
+			add_undefined(oper_a->symbol_name, currw + 1);
+		} else add_undefined(oper_a->symbol_name, currw + 2);
+	}
+	if (oper_b && oper_b->is_symbol) {
+		add_undefined(oper_b->symbol_name, currw + 1);
 	}
 }
 
