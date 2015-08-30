@@ -1,7 +1,7 @@
 CC=gcc
 CFLAGS=-c -g -Wno-packed-bitfield-compat
 LDFLAGS=-lfl -ly -g
-SOURCES=sas.c output.c label.c instruction.c directive.c lex.c yacc.c
+SOURCES=sas.c output.c label.c instruction.c directive.c ssf.c lex.c yacc.c
 OBJECTS=$(SOURCES:.c=.o)
 EXECUTABLE=sas
 

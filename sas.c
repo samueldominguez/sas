@@ -16,6 +16,7 @@
 
 int yyparse(void);
 extern FILE *yyin;
+extern void write_sof(FILE *out);
 
 struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
@@ -162,6 +163,7 @@ int main(int argc, char **argv)
 	int i;
 
 	currw = 0x0000;
+	start_write_address = 0x0000;
 
 	handle_args(argc, argv);
 	memset(ram, 0x0000, RAM_SIZE);
@@ -189,8 +191,16 @@ int main(int argc, char **argv)
 		yyin = asmfiles[i];
 		yyparse();
 	}
-	for (i = 0; i < currw; ++i) {
+/*	for (i = 0; i < currw; ++i) {
 		printf("0x%04x\n", ram[i]);
+	}*/
+	objfile = fopen(opts.obj_fname, "w");
+	if (objfile == NULL) {
+		sprintf(errstr, "couldn't open '%s' for output", opts.obj_fname);
+		error(errstr);
+	} else {
+		write_sof(objfile);
+		fclose(objfile);
 	}
 	exit:
 	close_files(asmfiles, opts.asm_fcount);

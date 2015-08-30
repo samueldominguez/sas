@@ -14,6 +14,7 @@
 
 u16 ram[RAM_SIZE];
 u16 currw;
+u16 start_write_address;
 
 int str2reg(char *s);
 int str2opcode(char *s);

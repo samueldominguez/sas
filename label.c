@@ -27,3 +27,17 @@ void add_undefined(char *s, int ram_address)
 	undefined_symbols[undefined_symbols_count].ram_address = ram_address;
 	undefined_symbols_count++;
 }
+
+int check_undefined_at_address(int address, struct label *undefined)
+{
+	int i;
+
+	for (i = 0; i < undefined_symbols_count; ++i) {
+		if (undefined_symbols[i].ram_address == address) {
+			strcpy(undefined->name, undefined_symbols[i].name);
+			undefined->ram_address = undefined_symbols[i].ram_address;
+			return 1;
+		}
+	}
+	return 0;
+}

@@ -13,7 +13,7 @@ typedef signed short s16;
 typedef unsigned short u16;
 typedef uint8_t u8;
 
-#define VERS	0.4
+#define VERS	0.8
 
 #define ARRAY_SIZE(a) (sizeof (a) / sizeof (*a))
 
