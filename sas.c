@@ -69,7 +69,9 @@ static void opts_free(void)
 static void close_files(FILE **asmfiles, int n)
 {
 	for (--n; n >= 0; --n) {
-		if (asmfiles[n]) fclose(asmfiles[n]);
+		if (asmfiles[n]){
+			fclose(asmfiles[n]);
+		}
 	}
 }
 
@@ -176,7 +178,7 @@ int main(int argc, char **argv)
 			sprintf(errstr, "couldn't open '%s'", opts.asm_fname[i]);
 			error(errstr);
 			error("perhaps it doesn't exist?");
-			close_files(asmfiles, i);
+			opts.asm_fcount = i;
 			goto exit;
 		}
 	}
