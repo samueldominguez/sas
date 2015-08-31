@@ -2,7 +2,7 @@ SAS is a DCPU-16 assembler.
 sas stands for simple assembler. It outputs object files which then
 are fed into the linker to then generate binary files. Why can't it
 generate binary files directly? this is because I needed tools that
-would work the way I wanted for system/kernel development.
+would work the way I wanted for systems/kernel development.
 
 The assembler is written entirely in C with yacc and lex for parsing.
 Released under the the GPL v2.
@@ -39,7 +39,7 @@ Tested on Linux kernel 3.16.0-4-amd64:
 - flex		2.5.39
 - make		4.0
 
-Tested on Oracle Solaris (SunOS 5.11) 11.2 i86pc i386
+Tested on Oracle Solaris (SunOS 5.11) 11.2 i86pc i386:
 - gcc		4.8.2
 - bison		2.3
 - flex		2.5.35
