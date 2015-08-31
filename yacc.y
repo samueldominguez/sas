@@ -101,6 +101,12 @@ dat:
 	;
 
 dat_expr:
+	dat_elem
+
+	| dat_elem ',' dat_expr
+	;
+
+dat_elem:
 	NUMBER				{
 						add_dat_element($1);
 					}
@@ -109,8 +115,8 @@ dat_expr:
 						int i;
 						int length = strlen($1);
 						for (i = 0; i < length; ++i) add_dat_element((int) $1[i]);
+						add_dat_element(0x0000); /* null byte */
 					}
-	| dat_expr ',' dat_expr
 	;
 
 operand:
