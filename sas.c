@@ -194,9 +194,7 @@ int main(int argc, char **argv)
 		yyin = asmfiles[i];
 		yyparse();
 	}
-/*	for (i = 0; i < currw; ++i) {
-		printf("0x%04x\n", ram[i]);
-	}*/
+/*	for (i = 0; i < currw; ++i) printf("0x%04x\n", ram[i]);*/
 	objfile = fopen(opts.obj_fname, "w");
 	if (objfile == NULL) {
 		sprintf(errstr, "couldn't open '%s' for output", opts.obj_fname);
