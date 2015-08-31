@@ -4,7 +4,7 @@
  */
 %{
 #include <stdio.h>
-#include "yacc.h"
+#include "yacc.tab.h"
 #include "output.h"
 
 extern int sas_error;

@@ -38,8 +38,6 @@ struct oper oper;
 %type <string> symbol
 %type <oper> operand op_expr expr
 
-%defines "yacc.h"
-
 %%
 
 program:
