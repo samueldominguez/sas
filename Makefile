@@ -1,6 +1,6 @@
 CC=gcc
-CFLAGS=-c -g -Wno-packed-bitfield-compat
-LDFLAGS=-lfl -ly -g
+CFLAGS=-c -O3 -Wno-packed-bitfield-compat
+LDFLAGS=-lfl -ly
 SOURCES=sas.c output.c label.c instruction.c directive.c sof.c lex.yy.c yacc.tab.c
 Y_SRC=yacc.y
 L_SRC=lex.l
@@ -9,7 +9,7 @@ EXECUTABLE=sas
 
 all: $(Y_SRC) $(L_SRC) $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS) 
+$(EXECUTABLE): $(OBJECTS)
 	$(CC) -o $@ $(OBJECTS) $(LDFLAGS)
 
 .c.o:
