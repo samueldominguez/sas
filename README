@@ -7,6 +7,10 @@ would work the way I wanted for system/kernel development.
 The assembler is written entirely in C with yacc and lex for parsing.
 Released under the the GPL v2.
 
+To build it simply type "make".
+
+Tested on Linux kernel (look below for testings).
+
 It supports multiple assembly files, and always generates 1 object
 file. Here are some directives it supports:
 
@@ -24,3 +28,13 @@ TODO:
 
 If you want to contact me, my email is samuel.dominguez.lorenzo@gmail.com
 bugs, issues, requests send them through Github.
+
+Testing
+-------
+It should compile with gcc, bison, flex and make.
+
+Tested on Linux kernel 3.16.0-4-amd64:
+- gcc 		4.9.2
+- bison 	3.0.2
+- flex		2.5.39
+- make		4.0
