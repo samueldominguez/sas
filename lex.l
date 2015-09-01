@@ -45,11 +45,11 @@ dat_lc		dat
 					yytext[strlen(yytext) - 1] = '\0';
 					return LABEL;
 				}
-[\+\-]?0x{hexdigit}+			{
+[\-]?0x{hexdigit}+			{
 					yylval.integer = get_valid_number(yytext);
 					return NUMBER;
 				}
-[\+\-]?{digit}+			{
+[\-]?{digit}+			{
 					yylval.integer = get_valid_number(yytext);
 					return NUMBER;
 				}
@@ -112,7 +112,7 @@ int bad_unsigned_range(int a)
 /* 1 on BAD, 0 on GOOD */
 int bad_signed_range(int a)
 {
-	if (a > 0x7fff || a < -0x8000) return 1;
+	if (a < -0x8000) return 1;
 	else return 0;
 }
 
