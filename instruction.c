@@ -148,7 +148,7 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 				instruction->word2 = (u16) oper_a->word;
 				instruction->word_length++;
 			} else {			
-				if (can_be_compressed(oper_a->word) && oper_a->is_symbol != 0) {
+				if (can_be_compressed(oper_a->word) && oper_a->is_symbol == 0) {
 					if (oper_a->word == 0xffff) {
 						instruction->opword.nonbasic.a = 0x20;
 					} else {

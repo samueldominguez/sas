@@ -22,7 +22,6 @@ struct opt_t opts; /* this is where all the specified options are stored */
 char defout[] = "a.o"; /* default object file name for output */
 /*union value lvalue; this is used by yacc/lex */
 int sas_error = 0; /* if there is an error parsing the file, this is 1 */
-int lines = 0; /* global line count */
 struct instr instruction;
 
 static void display_usage(void)
@@ -189,7 +188,6 @@ int main(int argc, char **argv)
 	init_undefined_table();
 	init_dat_dir();
 
-	lines = 0;
 	for (i = 0; i < opts.asm_fcount; ++i) {
 		yyin = asmfiles[i];
 		yyparse();
@@ -199,10 +197,10 @@ int main(int argc, char **argv)
 	if (objfile == NULL) {
 		sprintf(errstr, "couldn't open '%s' for output", opts.obj_fname);
 		error(errstr);
-	} else {
+	} else if (sas_error == 0) {
 		write_sof(objfile);
 		fclose(objfile);
-	}
+	} else fclose(objfile);
 	exit:
 	close_files(asmfiles, opts.asm_fcount);
 	opts_free();

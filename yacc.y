@@ -12,7 +12,6 @@ void yyerror();
 void error();
 int yylex();
 
-extern int lines;
 extern struct label label_table[];
 extern char *yytext;
 
@@ -47,7 +46,7 @@ program:
 	|
 	;
 
-line:		{ ++lines; }
+line:
 	statement
 	| label
 	| label statement
@@ -118,46 +117,51 @@ dat_elem:
 
 operand:
 	op_expr				{
-						yylval.oper->is_indirect = 0;
-						$$ = yylval.oper;
+						$1->is_indirect = 0;
+						$$ = $1;
 					}
 
 	| '[' op_expr ']'		{
-						yylval.oper->is_indirect = 1;
-						$$ = yylval.oper;
+						$2->is_indirect = 1;
+						$$ = $2;
 					}
 	;
 
 op_expr:
 	REG				{
-						yylval.oper = make_operand(0, 0, OP_REG, $1, 0, NULL);
+						$$ = make_operand(0, 0, OP_REG, $1, 0, NULL);
 					}
 	
-	| expr
+	| expr				{
+						$$ = $1;
+					}
 
 	| REG expr  /* PICK n */	{
-						set_operand_reg(yylval.oper, $1);
-						set_operand_type(yylval.oper, OP_REG_WRD);
+						set_operand_reg($2, $1);
+						set_operand_type($2, OP_REG_WRD);
+						$$ = $2;
 					}
 
 	| expr '+' REG			{
-						set_operand_reg(yylval.oper, $3);
-						set_operand_type(yylval.oper, OP_REG_WRD);
+						set_operand_reg($1, $3);
+						set_operand_type($1, OP_REG_WRD);
+						$$ = $1;
 					}
 
 	| REG '+' expr			{
-						set_operand_reg(yylval.oper, $1);
-						set_operand_type(yylval.oper, OP_REG_WRD);
+						set_operand_reg($3, $1);
+						set_operand_type($3, OP_REG_WRD);
+						$$ = $3;
 					}	
 	;
 
 expr:
 	NUMBER				{
-						yylval.oper = make_operand(0, 0, OP_WRD, 0, $1, NULL);
+						$$ = make_operand(0, 0, OP_WRD, 0, $1, NULL);
 					}
 
 	| symbol			{
-						yylval.oper = make_operand(0, 0, OP_WRD, 0, 0x0000, $1);
+						$$ = make_operand(0, 0, OP_WRD, 0, 0x0000, $1);
 					}
 	;
 

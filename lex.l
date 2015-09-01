@@ -8,11 +8,15 @@
 #include "output.h"
 
 extern int sas_error;
-extern int lines;
+
+int bad_unsigned_range(int a);
+int bad_signed_range(int a);
+int get_valid_number(char *s);
 %}
 
 %option noinput
 %option nounput
+%option yylineno
 
 ws			[ \t]
 letter		[A-Za-z]
@@ -41,12 +45,12 @@ dat_lc		dat
 					yytext[strlen(yytext) - 1] = '\0';
 					return LABEL;
 				}
-0x{hexdigit}+			{
-					yylval.integer = str2num(yytext);	
+[\+\-]?0x{hexdigit}+			{
+					yylval.integer = get_valid_number(yytext);
 					return NUMBER;
 				}
-{digit}+			{ 
-					yylval.integer = str2num(yytext);	
+[\+\-]?{digit}+			{
+					yylval.integer = get_valid_number(yytext);
 					return NUMBER;
 				}
 {gpreg}|{xreg}			{ 
@@ -81,7 +85,7 @@ dat_lc		dat
 .				{
 					fprintf(stderr, 
 					"error: line %d: unknown character '%c'\n",
-					lines, *yytext);
+					yylineno, *yytext);
 					sas_error = 1;
 				}
 
@@ -89,10 +93,47 @@ dat_lc		dat
 
 void yyerror(char *s)
 {
-	fprintf(stdout, "line %d: %s\n", lines, s);
+	fprintf(stdout, "line %d: %s\n", yylineno, s);
 }
 
 int yywrap()
 {
 	return 1;
+}
+
+/* 1 on BAD, 0 on GOOD */
+int bad_unsigned_range(int a)
+{
+	if (a > 0xffff || a < 0x0000) return 1;
+	else return 0;
+}
+
+/* following two's complement */
+/* 1 on BAD, 0 on GOOD */
+int bad_signed_range(int a)
+{
+	if (a > 0x7fff || a < -0x8000) return 1;
+	else return 0;
+}
+
+int get_valid_number(char *s)
+{
+	int value = str2num(s);
+
+	/* signed */
+	if (s[0] == '+' || s[0] == '-') {
+		if (bad_signed_range(value)) {
+			fprintf(stderr, "line %d: signed number '%s' out of 16 bit range, masked to 0x0000\n", yylineno, s);
+			return 0x0000;
+		} else {
+			return value;
+		}
+	} else { /* unsigned */
+		if (bad_unsigned_range(value)) {
+			fprintf(stderr, "line %d: unsigned number '%s' out of 16 bit range, masked to 0x0000\n", yylineno, s);
+			return 0x0000;
+		} else {
+			return value;
+		}
+	}
 }
