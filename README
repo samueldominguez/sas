@@ -9,7 +9,7 @@ Released under the the GPL v2.
 
 To build it simply type "make".
 
-Tested on Linux kernel and Solaris (SunOS). Should compile on all Unix
+Tested on Linux kernel and Solaris (SunOS). Should compile on all UNIX
 operating systems and and on Windows with Cygwin (look below for testings).
 
 It supports multiple assembly files, and always generates 1 object
