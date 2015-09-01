@@ -113,7 +113,6 @@ dat_elem:
 						int i;
 						int length = strlen($1);
 						for (i = 0; i < length; ++i) add_dat_element((int) $1[i]);
-						add_dat_element(0x0000); /* null byte */
 					}
 	;
 
