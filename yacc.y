@@ -37,6 +37,7 @@ struct oper oper;
 %token <string> NOASCII8
 %token <string> NOASCIZLEN
 %token <string> NOASCII8LEN
+%token <string> FILL
 %token <integer> NUMBER
 %token <integer> REG
 %token <integer> OP1
@@ -166,6 +167,18 @@ directive:
 							if (i < length) word += (int) $2[i];
 							add_dat_element((int) word);
 						}
+						write_dat_dir();
+						init_dat_dir();
+					}
+
+	| FILL NUMBER NUMBER		{
+						int i;
+						int length = $3;
+						if (length > (0xffff - currw)) {
+							error("fill directive overlaps ram, writing until 0xffff");
+							length = 0xffff - currw;
+						}
+						for (i = 0; i < length; ++i) add_dat_element($2);
 						write_dat_dir();
 						init_dat_dir();
 					}
