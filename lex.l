@@ -74,7 +74,7 @@ fill		fill
 {dat}|{dat_lc}			{
 					return DAT;
 				}
-\.{asciz}				{
+\.{asciz}			{
 					return ASCIZ;
 				}
 \.{ascii8}			{
