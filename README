@@ -16,14 +16,58 @@ It supports multiple assembly files, and always generates 1 object
 file. Here are some directives it supports:
 
 DIRECTIVES:
-DAT <value>/"<string>", ...	outputs values and 16 bit strings
+==========
+
+NOTICE:
+- 16 bit strings store the character in the least significant byte of
+  a word, this is to remain compatible with the LEM line of monitors
+  which use the most significant byte for colors
+
+- NULL termination for 16 bit strings means a NULL word is appended
+  at the end of the 16 bit string
+
+- NULL termination for 8 bit strings means either:
+  - a NULL word is appended at the end of the string if the length of
+    the string is even e.g "aa" = 0x6161 0x0000
+  - a NULL 8 bit byte is present in the least significant byte of the
+    word if the length of the string is odd e.g "aaa" = 0x6161 0x6100
+
+
+DAT <value>/"<string>", ...	outputs values and _non_ NULL terminated 
+				16 bits per ASCII character strings
+
+.asciz "<string>"		outputs NULL terminated 16 bits per ASCII
+				character strings
+
+.ascii8 "<string>"		outputs NULL terminated 8 bits per ASCII
+				character strings (2 characters packed in a word)
+
+.ascizlen "<string>"		outputs prefixed CHARACTER COUNT word, then
+				16 bits per ASCII character strings
+
+.ascii8len "<string>"		outputs prefixed CHARACTER COUNT, then
+				8 bits per ASCII character strings
+
+.noasciz "<string>"		outputs 16 bits per ASCII character strings
+
+.noascii8 "<string>"		outputs 8 bits per ASCII character strings
 
 TODO:
-.ascii8 "<string>"		outputs 8 bit strings
-				(2 characters packed in a word)
 .org <address>			set instruction origin to <address>
-.define <symbol> <value>	set <symbol> to <value> (is global)
+.define or
+.set or
+.equ or
+.def
+	<symbol> <value>	set <symbol> to <value> (is global)
+
 .fill <length> <value>		fills binary with <value> for <length> words
+.align <value>			pads with NULL until address % value = 0
+
+.data or
+.rodata or
+.text or
+.bss
+				(ignore)
 
 --lib command line option for symbol only object file generation.
 

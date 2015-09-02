@@ -29,6 +29,14 @@ struct oper oper;
 %token <string> LABEL
 %token <string> STRING
 %token <string> DAT
+%token <string> ASCIZ
+%token <string> ASCII8
+%token <string> ASCIZLEN
+%token <string> ASCII8LEN
+%token <string> NOASCIZ
+%token <string> NOASCII8
+%token <string> NOASCIZLEN
+%token <string> NOASCII8LEN
 %token <integer> NUMBER
 %token <integer> REG
 %token <integer> OP1
@@ -74,7 +82,7 @@ statement:
 						currw += instruction.word_length;
 					}
 
-	| dat
+	| directive
 	;
 
 instruct:
@@ -87,6 +95,79 @@ instruct:
 	| OP1 operand			{
 						instruction.word_length = 1;
 						make_instruction($1, $2, NULL, &instruction);
+					}
+	;
+
+directive:
+	dat
+	| ASCIZ	STRING			{
+						int i;
+						int length = strlen($2);
+						for (i = 0; i < length; ++i) add_dat_element((int) $2[i]);
+						add_dat_element(0x0000);
+						write_dat_dir();
+						init_dat_dir();
+					}
+
+	| ASCII8 STRING			{
+						int i;
+						int length = strlen($2);
+						u16 word;
+						for (i = 0; i < length; ++i) {
+							word = (int) $2[i] << 8;
+							++i;
+							if (i < length) word += (int) $2[i];
+							add_dat_element((int) word);
+						}
+						if (length % 2 == 0) add_dat_element(0x0000);
+						write_dat_dir();
+						init_dat_dir();
+					}
+	
+	| ASCIZLEN STRING		{
+						int i;
+						int length = strlen($2);
+						add_dat_element(length);
+						for (i = 0; i < length; ++i) add_dat_element($2[i]);
+						write_dat_dir();
+						init_dat_dir();
+					}
+
+	| ASCII8LEN STRING		{
+						int i;
+						int length = strlen($2);
+						u16 word;
+						add_dat_element(length);
+						for (i = 0; i < length; ++i) {
+							word = (int) $2[i] << 8;
+							++i;
+							if (i < length) word += (int) $2[i];
+							add_dat_element((int) word);
+						}
+						write_dat_dir();
+						init_dat_dir();
+					}
+
+	| NOASCIZ STRING		{
+						int i;
+						int length = strlen($2);
+						for (i = 0; i < length; ++i) add_dat_element((int) $2[i]);
+						write_dat_dir();
+						init_dat_dir();
+					}
+
+	| NOASCII8 STRING		{
+						int i;
+						int length = strlen($2);
+						u16 word;
+						for (i = 0; i < length; ++i) {
+							word = (int) $2[i] << 8;
+							++i;
+							if (i < length) word += (int) $2[i];
+							add_dat_element((int) word);
+						}
+						write_dat_dir();
+						init_dat_dir();
 					}
 	;
 

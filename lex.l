@@ -32,7 +32,12 @@ op1			JSR|HCF|INT|RFI|IA[GSQ]|HW[NQI]
 op1_lc		jsr|hcf|int|rfi|ia[gsq]|hw[nqi]
 dat		DAT
 dat_lc		dat
-
+asciz		asciz
+ascii8		ascii8
+ascizlen	ascizlen
+ascii8len	ascii8len
+noasciz		noasciz
+noascii8	noascii8
 
 %%
 
@@ -68,13 +73,35 @@ dat_lc		dat
 {dat}|{dat_lc}			{
 					return DAT;
 				}
+\.{asciz}				{
+					return ASCIZ;
+				}
+\.{ascii8}			{
+					return ASCII8;
+				}
+\.{ascizlen}			{
+					return ASCIZLEN;
+				}
+\.{ascii8len}			{
+					return ASCII8LEN;
+				}
+\.{noasciz}			{
+					return NOASCIZ;
+				}
+\.{noascii8}			{
+					return NOASCII8;
+				}
 {symbol}			{ 
 					yylval.string = yytext;
 					return SYMBOL;
 				}
 \"(\\.|[^\\"])*\"		{
-					yytext[strlen(yytext) - 1] = '\0';
-					yylval.string = yytext + 1;
+					if (strcmp(yytext, "") == 0) {
+						yylval.string[0] = '\0';
+					} else {
+						yytext[strlen(yytext) - 1] = '\0';
+						yylval.string = yytext + 1;
+					}
 					return STRING;
 				}
 
