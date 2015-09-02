@@ -192,15 +192,17 @@ int main(int argc, char **argv)
 		yyin = asmfiles[i];
 		yyparse();
 	}
-/*	for (i = 0; i < currw; ++i) printf("0x%04x\n", ram[i]);*/
-	objfile = fopen(opts.obj_fname, "w");
-	if (objfile == NULL) {
-		sprintf(errstr, "couldn't open '%s' for output", opts.obj_fname);
-		error(errstr);
-	} else if (sas_error == 0) {
-		write_sof(objfile);
-		fclose(objfile);
-	} else fclose(objfile);
+	
+	if (sas_error == 0) {
+		objfile = fopen(opts.obj_fname, "w");
+		if (objfile == NULL) {
+			sprintf(errstr, "couldn't open '%s' for output", opts.obj_fname);
+			error(errstr);
+		} else {
+			write_sof(objfile);
+			fclose(objfile);
+		}
+	}
 	exit:
 	close_files(asmfiles, opts.asm_fcount);
 	opts_free();

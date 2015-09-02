@@ -6,6 +6,7 @@
 #define LABEL_H
 
 #include <string.h>
+#include <stdio.h>
 
 /* this max value was taken from the C standard, interesting fact, or not? */
 #define LABEL_MAX_LENGTH	63
