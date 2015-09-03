@@ -14,6 +14,7 @@ int yylex();
 
 extern struct label label_table[];
 extern char *yytext;
+extern int yylineno;
 
 struct instr instruction;
 struct oper oper;
@@ -38,6 +39,7 @@ struct oper oper;
 %token <string> NOASCIZLEN
 %token <string> NOASCII8LEN
 %token <string> FILL
+%token <string> ALIGN
 %token <integer> NUMBER
 %token <integer> REG
 %token <integer> OP1
@@ -181,6 +183,10 @@ directive:
 						for (i = 0; i < length; ++i) add_dat_element($2);
 						write_dat_dir();
 						init_dat_dir();
+					}
+
+	| ALIGN NUMBER			{
+						for ( ; currw % $2 != 0; ++currw) ;
 					}
 	;
 

@@ -39,6 +39,7 @@ ascii8len	ascii8len
 noasciz		noasciz
 noascii8	noascii8
 fill		fill
+align		align
 
 %%
 
@@ -92,8 +93,11 @@ fill		fill
 \.{noascii8}			{
 					return NOASCII8;
 				}
-\.fill				{
+\.{fill}			{
 					return FILL;
+				}
+\.{align}			{
+					return ALIGN;
 				}
 {symbol}			{ 
 					yylval.string = yytext;
