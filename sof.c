@@ -10,6 +10,9 @@
 
 #include "output.h"
 #include "label.h"
+#include "opt.h"
+
+extern struct opt_t opts;
 
 /* max symbol pair length, then used for single binary section element.
  * max label/symbol length = 63 , max hex word length = 6, newline + space = 2
@@ -44,6 +47,9 @@ void write_sof(FILE *out)
 		fputs(line, out);
 	}
 
+	/* generate symbols only? */
+	if (opts.sof_lib_mode) goto sof_end;
+
 	/* next section, binary */
 	fputs("binary:\n", out);
 	
@@ -57,5 +63,7 @@ void write_sof(FILE *out)
 			fputs(" ", out);
 		}
 	}
-	fputs("\nend", out);
+	fputs("\n", out);
+	sof_end:
+	fputs("end", out);
 }

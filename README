@@ -52,6 +52,10 @@ DAT <value>/"<string>", ...	outputs values and _non_ NULL terminated
 
 .noascii8 "<string>"		outputs 8 bits per ASCII character strings
 
+.fill <value> <length>		fills binary with <value> for <length> words
+
+.align <value>			pads with NULL until address % value = 0
+
 TODO:
 .org <address>			set instruction origin to <address>
 .define or
@@ -60,16 +64,13 @@ TODO:
 .def
 	<symbol> <value>	set <symbol> to <value> (is global)
 
-.fill <length> <value>		fills binary with <value> for <length> words
-.align <value>			pads with NULL until address % value = 0
-
 .data or
 .rodata or
 .text or
 .bss
 				(ignore)
 
---lib command line option for symbol only object file generation.
+--sof-lib command line option for symbol only object file generation (SOF)
 
 If you want to contact me, my email is samuel.dominguez.lorenzo@gmail.com
 bugs, issues, requests send them through Github.

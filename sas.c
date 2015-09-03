@@ -84,6 +84,7 @@ static void handle_args(int argc, char **argv)
 	static const char *optstring = "ho:";
 	static const struct option longopts[] = {
 		{"help", no_argument, NULL, 0},
+		{"sof-lib", no_argument, NULL, 0},
 		{"version", no_argument, NULL, 0},
 	};
 
@@ -121,6 +122,9 @@ static void handle_args(int argc, char **argv)
 					longopts[longind].name) == 0) {
 				display_version();
 				exit(EXIT_FAILURE);
+			} else if (strcmp("sof-lib",
+					longopts[longind].name) == 0) {
+				opts.sof_lib_mode = 1;
 			}
 			break;
 		}

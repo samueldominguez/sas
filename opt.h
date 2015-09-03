@@ -10,6 +10,7 @@ struct opt_t {
 	char *obj_fname; /* name of the object file */
 	int obj_name_spec; /* did the user specify an object name? */
 	int asm_fcount; /* how many asm files? */
+	int sof_lib_mode; /* generate lib file for SOF object file format? */
 };
 
 #endif /* OPT_H */
