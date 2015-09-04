@@ -10,7 +10,9 @@ Released under the the GPL v2.
 To build it simply type "make".
 
 Tested on Linux kernel and Solaris (SunOS). Should compile on all UNIX
-operating systems and and on Windows with Cygwin (look below for testings).
+operating systems and and on Windows with Mingw/Cygwin (look below for 
+testings and help on building). If you have problems building just
+submit an issue with specific details and I'll try to help.
 
 It supports multiple assembly files, and always generates 1 object
 file. Here are some directives it supports:
@@ -77,7 +79,9 @@ bugs, issues, requests send them through Github.
 
 Testing
 -------
-It should compile with gcc, bison, flex and make.
+It should compile with gcc (or mingw), bison (with Cygwin on Windows,
+flex (with Cygwin too on Windows) and make (I think Cygwin has make,
+but otherwise just compile manually for Windows).
 
 Tested on Linux kernel 3.16.0-4-amd64:
 - gcc 		4.9.2
