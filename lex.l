@@ -40,6 +40,10 @@ noasciz		noasciz
 noascii8	noascii8
 fill		fill
 align		align
+data		data
+rodata		rodata
+text		text
+bss		bss
 
 %%
 
@@ -98,6 +102,22 @@ align		align
 				}
 \.{align}			{
 					return ALIGN;
+				}
+\.{data}			{
+					printf("sas: ignoring directive .data\n");
+					return DATA;
+				}
+\.{rodata}			{
+					printf("sas: ignoring directive .rodata\n");
+					return RODATA;
+				}
+\.{text}			{
+					printf("sas: ignoring directive .text\n");
+					return TEXT;
+				}
+\.{bss}				{
+					printf("sas: ignoring directive .bss\n");
+					return BSS;
 				}
 {symbol}			{ 
 					yylval.string = yytext;

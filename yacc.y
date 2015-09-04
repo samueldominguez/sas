@@ -40,6 +40,10 @@ struct oper oper;
 %token <string> NOASCII8LEN
 %token <string> FILL
 %token <string> ALIGN
+%token <string> DATA
+%token <string> RODATA
+%token <string> TEXT
+%token <string> BSS
 %token <integer> NUMBER
 %token <integer> REG
 %token <integer> OP1
@@ -188,6 +192,10 @@ directive:
 	| ALIGN NUMBER			{
 						for ( ; currw % $2 != 0; ++currw) ;
 					}
+	| DATA
+	| RODATA
+	| TEXT
+	| BSS
 	;
 
 dat:
