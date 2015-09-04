@@ -56,14 +56,6 @@ DAT <value>/"<string>", ...	outputs values and _non_ NULL terminated
 
 .align <value>			pads with NULL until address % value = 0
 
-TODO:
-.org <address>			set instruction origin to <address>
-.define or
-.set or
-.equ or
-.def
-	<symbol> <value>	set <symbol> to <value> (is global)
-
 .data or
 .rodata or
 .text or
@@ -71,6 +63,14 @@ TODO:
 				(ignore)
 
 --sof-lib command line option for symbol only object file generation (SOF)
+
+TODO:
+.org <address>			set instruction origin to <address>
+.define or
+.set or
+.equ or
+.def
+	<symbol> <value>	set <symbol> to <value> (is global)
 
 If you want to contact me, my email is samuel.dominguez.lorenzo@gmail.com
 bugs, issues, requests send them through Github.

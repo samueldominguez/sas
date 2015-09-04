@@ -28,13 +28,15 @@ static void display_usage(void)
 {
 	fprintf(stderr,
 	"sas - simple dcpu-16 assembler; version %.2f\n", VERS);
-	fprintf(stderr, "usage: sas [options] [asmfiles]\n");
-	fprintf(stderr, "options:\n");
-	fprintf(stderr,
+	fprintf(stdout, "usage: sas [options] [asmfiles]\n");
+	fprintf(stdout, "options:\n");
+	fprintf(stdout,
 	"  -o outfile		write object to outfile, default name is a.o\n");
-	fprintf(stderr,
+	fprintf(stdout,
+	"  --sof-lib		generates a symbol only object file\n");
+	fprintf(stdout,
 	"  --version		display version number and exit\n");
-	fprintf(stderr,
+	fprintf(stdout,
 	"  -h, --help		display this help and exit\n");
 }
 
