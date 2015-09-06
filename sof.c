@@ -52,7 +52,7 @@ void write_sof(FILE *out)
 
 	/* next section, binary */
 	fputs("binary:\n", out);
-	
+
 	for (i = start_write_address; i < currw; ++i) {
 		if (check_undefined_at_address(i, &undefined)) {
 			fputs(undefined.name, out);
