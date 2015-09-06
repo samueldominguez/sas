@@ -9,7 +9,8 @@ extern u16 currw;
 extern void sas_error(char *s);
 extern void add_undefined(char *s, int ram_address);
 
-struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, int word, char *symbol)
+struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg,
+			  int word, char *symbol)
 {
 	struct oper *oper;
 
@@ -21,13 +22,15 @@ struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg, i
 		oper->reg = reg;
 		oper->word = word;
 		if (symbol) {
-			strncpy(oper->symbol_name, symbol, SYMBOL_MAX_LENGTH + 1);
+			strncpy(oper->symbol_name, symbol,
+				SYMBOL_MAX_LENGTH + 1);
 			oper->is_symbol = 1;
 		} else {
 			oper->is_symbol = 0;
 		}
 	} else {
-		sas_error("memory allocation failed for operand data structure");
+		sas_error("memory allocation failed for operand"
+			  "data structure");
 	}
 	return oper;
 }
@@ -47,12 +50,13 @@ void set_operand_type(struct oper *oper, int type)
  * however when refered to operands, the first operand (oper_a) is really
  * the 5 bit representation of 'b', and the second operand (oper_b) is really
  * the 6 bit representation of 'a' */
-void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, struct instr *instruction)
+void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b,
+		      struct instr *instruction)
 {
 	/* is basic (OP2, oper, oper) */
 	if (oper_b) {
 		instruction->opword.basic.o = (u8) opcode;
-		
+
 		switch (oper_a->oper_type) {
 		case OP_REG:
 			instruction->opword.basic.b = (u8) oper_a->reg;
@@ -70,7 +74,8 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 			instruction->word_length++;
 		break;
 		case OP_REG_WRD:
-			instruction->opword.basic.b = (u8) (oper_a->reg + 0x10);
+			instruction->opword.basic.b =
+				(u8) (oper_a->reg + 0x10);
 			instruction->word2 = (u16) oper_a->word;
 			instruction->word_length++;
 		break;
@@ -96,27 +101,34 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 					instruction->word2 = (u16) oper_b->word;
 				}
 				instruction->word_length++;
-			} else {			
-				if (can_be_compressed(oper_b->word) && oper_b->is_symbol == 0) {
+			} else {
+				if (can_be_compressed(oper_b->word)
+				    && oper_b->is_symbol == 0) {
 					if (oper_b->word == 0xffff) {
-						instruction->opword.basic.a = 0x20;
+						instruction->opword.basic.a
+							= 0x20;
 					} else {
-						instruction->opword.basic.a = oper_b->word + 0x21;
+						instruction->opword.basic.a
+							= oper_b->word + 0x21;
 					}
 				} else {
 					instruction->opword.basic.a = DIR_NW;
 					if (instruction->word_length == 2) {
-						instruction->word3 = instruction->word2;
-						instruction->word2 = (u16) oper_b->word;
+						instruction->word3
+							= instruction->word2;
+						instruction->word2
+							= (u16) oper_b->word;
 					} else {
-						instruction->word2 = (u16) oper_b->word;
+						instruction->word2
+							= (u16) oper_b->word;
 					}
 					instruction->word_length++;
 				}
 			}
 		break;
 		case OP_REG_WRD:
-			instruction->opword.basic.a = (u8) (oper_b->reg + 0x10);
+			instruction->opword.basic.a
+				= (u8) (oper_b->reg + 0x10);
 			if (instruction->word_length == 2) {
 				instruction->word3 = instruction->word2;
 				instruction->word2 = (u16) oper_b->word;
@@ -147,22 +159,28 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 				instruction->opword.nonbasic.a = IND_NW;
 				instruction->word2 = (u16) oper_a->word;
 				instruction->word_length++;
-			} else {			
-				if (can_be_compressed(oper_a->word) && oper_a->is_symbol == 0) {
+			} else {
+				if (can_be_compressed(oper_a->word)
+				    && oper_a->is_symbol == 0) {
 					if (oper_a->word == 0xffff) {
-						instruction->opword.nonbasic.a = 0x20;
+						instruction->opword.nonbasic.a
+							= 0x20;
 					} else {
-						instruction->opword.nonbasic.a = oper_a->word + 0x21;
+						instruction->opword.nonbasic.a
+							= oper_a->word + 0x21;
 					}
 				} else {
-					instruction->opword.nonbasic.a = DIR_NW;
-					instruction->word2 = (u16) oper_a->word;
+					instruction->opword.nonbasic.a
+						= DIR_NW;
+					instruction->word2
+						= (u16) oper_a->word;
 					instruction->word_length++;
 				}
 			}
 		break;
 		case OP_REG_WRD:
-			instruction->opword.nonbasic.a = (u8) (oper_a->reg + 0x10);
+			instruction->opword.nonbasic.a
+				= (u8) (oper_a->reg + 0x10);
 			instruction->word2 = (u16) oper_a->word;
 			instruction->word_length++;
 		break;
@@ -170,7 +188,7 @@ void make_instruction(int opcode, struct oper *oper_a, struct oper *oper_b, stru
 		;
 		/* do nothing */
 		}
-		free(oper_a);	
+		free(oper_a);
 	}
 	if (oper_a->is_symbol) {
 		if (instruction->word_length == 2) {
