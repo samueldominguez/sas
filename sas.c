@@ -88,12 +88,14 @@ static void handle_args(int argc, char **argv)
 		{"help", no_argument, NULL, 0},
 		{"sof-lib", no_argument, NULL, 0},
 		{"version", no_argument, NULL, 0},
+		{"org", required_argument, NULL, 0},
 	};
 
 	opts.asm_fname = NULL;
 	opts.obj_fname = NULL;
 	opts.obj_name_spec = 0;
 	opts.asm_fcount = 0;	
+	opts.org = 0;
 
 	opt = getopt_long(argc, argv, optstring, longopts, &longind);
 
@@ -127,6 +129,9 @@ static void handle_args(int argc, char **argv)
 			} else if (strcmp("sof-lib",
 					longopts[longind].name) == 0) {
 				opts.sof_lib_mode = 1;
+			} else if (strcmp("org",
+					longopts[longind].name) == 0) {
+				opts.org = strtol(optarg, NULL, 0);
 			}
 			break;
 		}

@@ -42,7 +42,9 @@ void write_sof(FILE *out)
 	for (i = 0; i < label_count; ++i) {
 		strcpy(line, label_table[i].name);
 		strcat(line, " ");
-		sprintf(word, "0x%04x\n", label_table[i].ram_address);
+		/* we add the org address to these values, default is 0 */
+		sprintf(word, "0x%04x\n", 
+			label_table[i].ram_address + opts.org);
 		strcat(line, word);
 		fputs(line, out);
 	}

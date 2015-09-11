@@ -11,6 +11,7 @@ struct opt_t {
 	int obj_name_spec; /* did the user specify an object name? */
 	int asm_fcount; /* how many asm files? */
 	int sof_lib_mode; /* generate lib file for SOF object file format? */
+	int org;	/* where the program expects to be loaded */
 };
 
 #endif /* OPT_H */
