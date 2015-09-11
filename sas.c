@@ -35,6 +35,8 @@ static void display_usage(void)
 	fprintf(stdout,
 	"  --sof-lib		generates a symbol only object file\n");
 	fprintf(stdout,
+	"  --org <address>	object file symbols offset by <address>\n");
+	fprintf(stdout,
 	"  --version		display version number and exit\n");
 	fprintf(stdout,
 	"  -h, --help		display this help and exit\n");
