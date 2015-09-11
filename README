@@ -63,8 +63,10 @@ DAT <value>/"<string>", ...	outputs values and _non_ NULL terminated
 .text or
 .bss
 				(ignore)
+special command line options:
 
---sof-lib command line option for symbol only object file generation (SOF)
+--sof-lib 			symbol only object file generation (SOF)
+--org <address>			all symbols are offset <address>
 
 TODO:
 .org <address>			set instruction origin to <address>
