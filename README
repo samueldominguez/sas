@@ -66,7 +66,10 @@ DAT <value>/"<string>", ...	outputs values and _non_ NULL terminated
 special command line options:
 
 --sof-lib 			symbol only object file generation (SOF)
---org <address>			all symbols are offset <address>
+--org <address>			all symbols are offset <address> IMPORTANT:
+				do not specify this later into the linker,
+				else double the address will be the expected
+				origin of the binary
 
 TODO:
 .org <address>			set instruction origin to <address>
