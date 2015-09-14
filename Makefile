@@ -10,16 +10,20 @@ EXECUTABLE=sas
 all: $(Y_SRC) $(L_SRC) $(SOURCES) $(EXECUTABLE)
 
 $(EXECUTABLE): $(OBJECTS)
-	$(CC) -o $@ $(OBJECTS) $(LDFLAGS)
+	@$(CC) -o $@ $(OBJECTS) $(LDFLAGS)
+	@echo "LINK	$@"
 
 .c.o:
-	$(CC) $(CFLAGS) $< -o $@
+	@$(CC) $(CFLAGS) $< -o $@
+	@echo "CC	$<"
 
 %.tab.c %.tab.h: %.y
-	bison -d $<
+	@bison -d $<
+	@echo "BISON	$<"
 
 %.yy.c: %.l yacc.y
-	flex $<
+	@flex $<
+	@echo "FLEX	$<"
 
 clean:
 	rm -f lex.yy.c
