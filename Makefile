@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-c -O3 -Wno-packed-bitfield-compat
-LDFLAGS=-ll -ly
+LDFLAGS=-lfl -ly
 SOURCES=sas.c output.c label.c instruction.c directive.c sof.c lex.yy.c yacc.tab.c
 Y_SRC=yacc.y
 L_SRC=lex.l
