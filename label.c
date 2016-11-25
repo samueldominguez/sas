@@ -5,6 +5,7 @@
 #include "label.h"
 
 extern int sas_error;
+extern void error(char *s);
 
 void init_label_table()
 {

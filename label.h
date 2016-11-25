@@ -31,5 +31,6 @@ void add_label(char *s, int ram_address);
 void init_undefined_table();
 void add_undefined(char *s, int ram_address);
 int check_undefined_at_address(int address, struct label *undefined);
+int is_redefine(char *s);
 
 #endif /* LABEL_H */
