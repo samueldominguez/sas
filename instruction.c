@@ -6,7 +6,7 @@
 
 extern u16 currw;
 
-extern void sas_error(char *s);
+extern void error(char *s);
 extern void add_undefined(char *s, int ram_address);
 
 struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg,
@@ -29,7 +29,7 @@ struct oper *make_operand(int op_pos, int is_indirect, int oper_type, int reg,
 			oper->is_symbol = 0;
 		}
 	} else {
-		sas_error("memory allocation failed for operand"
+		error("memory allocation failed for operand"
 			  "data structure");
 	}
 	return oper;
