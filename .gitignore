@@ -1,2 +1,7 @@
-test.s
 *~
+*.o
+lex.yy.c
+yacc.tab.c
+yacc.tab.h
+sas
+test.s
